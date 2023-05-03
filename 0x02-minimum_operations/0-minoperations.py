@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" This module tries to find the minimum operations used 
+""" This module tries to find the minimum operations used
     to achieve a copy of H
 """
 
@@ -14,6 +14,6 @@ def minOperations(n: int) -> int:
         if (n % fact) == 0:
             n //= fact
             moves += fact
-        else :
+        else:
             fact += 1
     return moves
