@@ -21,10 +21,10 @@ pattern = (pt + st)
 # Define the function to print the current metrics
 def print_metrics(total_size, status_counts):
     """ We print the metrics """
-    print(f'Total file size: {total_size}')
+    print('Total file size:', total_size)
     for status_code, count in sorted(status_counts.items()):
         if count > 0:
-            print(f'{status_code}: {count}')
+            print(status_code, ':', count)
 
 
 # Process input lines and update metrics
