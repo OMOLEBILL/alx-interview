@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-
-"""This modules takes input from the sys.stdin and logs it """
+""" This modules takes input from the sys.stdin and logs it """
 import sys
 import re
 
