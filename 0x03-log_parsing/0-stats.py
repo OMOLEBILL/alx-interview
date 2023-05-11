@@ -1,57 +1,42 @@
 #!/usr/bin/python3
-
-"""reads stdin line by line and computes metrics"""
-
 import sys
 import re
 
+# Initialize metrics variables
+total_size = 0
+status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
-def main():
-    """reads stdin line by line and computes metrics"""
-    current_dict = {"200": 0, "301": 0, "400": 0, "401": 0,
-                    "403": 0, "404": 0, "405": 0, "500": 0}
+# Define the regular expression pattern to match the log line format
+pattern = r'^(\d+\.\d+\.\d+\.\d+)\s+-\s+\[(.*?)\]\s+"GET /projects/260 HTTP/1\.1"\s+(\d+)\s+(\d+)'
 
-    file_size = 0
-    count = 0
-    try:
-        while True:
-            line = sys.stdin.readline()
-            if not line:
-                break
+# Define the function to print the current metrics
+def print_metrics(total_size, status_counts):
+    print("Total file size: {}".format(total_size))
+    for status_code, count in sorted(status_counts.items()):
+        if count > 0:
+            print("{}: {}".format(status_code, count))
 
-            st = r'\[(.*?)\] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)$'
-            pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - ' + st
+# Process input lines and update metrics
+try:
+    for i, line in enumerate(sys.stdin):
+        # Skip lines that don't match the expected format
+        match = re.match(pattern, line.strip())
+        if not match:
+            continue
 
-            match = re.match(pattern, line)
-            if not match:
-                continue
+        # Extract IP address, date, status code, and file size from the matched line
+        ip_address, date, status_code, file_size = match.groups()
 
-            status_code = match.group(3)
+        # Update metrics
+        total_size += int(file_size)
+        status_counts[int(status_code)] += 1
 
-            if not int(status_code):
-                continue
+        # Print metrics every 10 lines
+        if i > 0 and i % 10 == 0:
+            print_metrics(total_size, status_counts)
+            status_counts = dict.fromkeys(status_counts, 0)
 
-            if status_code in current_dict:
-                count += 1
-                current_dict[status_code] += 1
-                file_size += int(match.group(4))
-
-            if count == 10:
-                print("File size: {}".format(file_size))
-                sorted_dict = sorted(current_dict.items(),
-                                     key=lambda x: x)
-                for key, value in sorted_dict:
-                    if value != 0:
-                        print("{}: {}".format(key, value))
-                count = 0
-    except KeyboardInterrupt as e:
-        sorted_dict = sorted(current_dict.items(),
-                             key=lambda x: x)
-        for key, value in sorted_dict:
-            if value != 0:
-                print("{}: {}".format(key, value))
-        print(e)
-
-
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    # Print final metrics and exit gracefully on keyboard interrupt
+    print_metrics(total_size, status_counts)
+    sys.exit(0)
