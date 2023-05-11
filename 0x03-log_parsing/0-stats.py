@@ -1,7 +1,9 @@
 #!/usr/bin/python3
+
 """This modules takes input from the sys.stdin and logs it """
 import sys
 import re
+
 
 total_size = 0
 status_counts = {200: 0,
@@ -18,8 +20,6 @@ st = r'"GET /projects/260 HTTP/1\.1"\s+(\d+)\s+(\d+)'
 pattern = (pt + st)
 
 # Define the function to print the current metrics
-
-
 def print_metrics(total_size, status_counts):
     """ We print the metrics """
     print(f'Total file size: {total_size}')
