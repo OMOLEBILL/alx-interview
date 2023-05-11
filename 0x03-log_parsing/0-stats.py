@@ -24,7 +24,7 @@ def print_metrics(total_size, status_counts):
     print('Total file size:', total_size)
     for status_code, count in sorted(status_counts.items()):
         if count > 0:
-            print(status_code, ':', count)
+            print("{}: {}".format(status_code, count))
 
 
 # Process input lines and update metrics
