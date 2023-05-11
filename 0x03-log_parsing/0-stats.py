@@ -4,25 +4,29 @@ import sys
 import re
 
 total_size = 0
-status_counts = {200: 0, 
-				301: 0, 
-                400: 0, 
-                401: 0, 
-                403: 0, 
-                404: 0, 
-                405: 0, 
-                500: 0}
+status_counts = {200: 0,
+                 301: 0,
+                 400: 0,
+                 401: 0,
+                 403: 0,
+                 404: 0,
+                 405: 0,
+                 500: 0}
 # Define regular expression to match expected line format
 pt = r'^(\d+\.\d+\.\d+\.\d+)\s+-\s+\[(.*?)\]\s+'
 st = r'"GET /projects/260 HTTP/1\.1"\s+(\d+)\s+(\d+)'
 pattern = (pt + st)
 
 # Define the function to print the current metrics
+
+
 def print_metrics(total_size, status_counts):
+    """ We print the metrics """
     print(f'Total file size: {total_size}')
     for status_code, count in sorted(status_counts.items()):
         if count > 0:
             print(f'{status_code}: {count}')
+
 
 # Process input lines and update metrics
 try:
@@ -32,7 +36,8 @@ try:
         if not match:
             continue
 
-        # Extract IP address, date, status code, and file size from the matched line
+        # Extract IP address, date, status code, and file size from the matched
+        # line
         ip_address, date, status_code, file_size = match.groups()
 
         # Update metrics
