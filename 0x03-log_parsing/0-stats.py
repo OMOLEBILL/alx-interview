@@ -4,17 +4,28 @@ import re
 
 # Initialize metrics variables
 total_size = 0
-status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+status_counts = {
+    200: 0,
+    301: 0,
+    400: 0,
+    401: 0,
+    403: 0,
+    404: 0,
+    405: 0,
+    500: 0}
 
 # Define the regular expression pattern to match the log line format
-pattern = r'^(\d+\.\d+\.\d+\.\d+)\s+-\s+\[(.*?)\]\s+"GET /projects/260 HTTP/1\.1"\s+(\d+)\s+(\d+)'
-
+st = r'\[(.*?)\] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)$'
+pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - ' + st
 # Define the function to print the current metrics
+
+
 def print_metrics(total_size, status_counts):
     print("Total file size: {}".format(total_size))
     for status_code, count in sorted(status_counts.items()):
         if count > 0:
             print("{}: {}".format(status_code, count))
+
 
 # Process input lines and update metrics
 try:
@@ -24,7 +35,8 @@ try:
         if not match:
             continue
 
-        # Extract IP address, date, status code, and file size from the matched line
+        # Extract IP address, date, status code, and file size from the matched
+        # line
         ip_address, date, status_code, file_size = match.groups()
 
         # Update metrics
