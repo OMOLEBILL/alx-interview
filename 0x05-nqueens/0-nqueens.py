@@ -10,7 +10,8 @@ def is_valid_position(solution, position):
     Verifies if the position is valid for placing a queen
     """
     for queen in solution:
-        if queen[1] == position[1] or (queen[0] + queen[1]) == (position[0] + position[1]) or \
+        if queen[1] == position[1] or \
+            (queen[0] + queen[1]) == (position[0] + position[1]) or \
                 (queen[0] - queen[1]) == (position[0] - position[1]):
             return False
     return True
