@@ -3,7 +3,7 @@
 
 
 def canUnlockAll(boxes):
-    """ @boxes are matrix with list """
+    """@boxes are matrix with list"""
     n = len(boxes)  # number of boxes
     # initially, all boxes are locked except the first one
     unlocked = [False] * n

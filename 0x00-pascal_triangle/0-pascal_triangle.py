@@ -6,7 +6,7 @@
 def pascal_triangle(n):
     """We retrun the pascal array"""
     if n == 0:
-        return ([])
+        return []
     tringle = []
     for i in range(n):
         row = [1] * (i + 1)

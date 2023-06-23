@@ -8,4 +8,3 @@ If n is impossible to achieve, return 0
 ### authours
 Bill Omole
 - [linkedIn](https://www.linkedin.com/in/bill-otieno-33250b142/)
-

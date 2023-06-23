@@ -3,8 +3,8 @@
 
 
 def validUTF8(data):
-    """ Variable to keep track of the number of bytes in the current UTF-8
-     character"""
+    """Variable to keep track of the number of bytes in the current UTF-8
+    character"""
     num_bytes = 0
 
     # Iterate over each byte in the data
@@ -12,7 +12,7 @@ def validUTF8(data):
         # Check if the byte is a continuation byte
         if num_bytes > 0:
             """If the byte doesn't start with "10" as the two most significant
-               bits it's an invalid continuation byte """
+            bits it's an invalid continuation byte"""
             if (byte >> 6) != 0b10:
                 return False
             num_bytes -= 1
